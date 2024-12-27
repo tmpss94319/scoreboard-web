@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* border: 1px solid red; */
+            user-select: none
+        }
+
+        @font-face {
+            font-family: 'digital7-mono';
+            src: url('./assets/fonts/digital7/digital-7 (mono).ttf');
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .test {
+            border: 1px solid red;
+        }
+
+        .main {
+            background: #333;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .board {
+            outline: 0.6vw solid #fff;
+            outline-offset: 2vw;
+            padding-top: 1vw;
+            padding-bottom: 1vw;
+            border-radius: 1px;
+            width: 90%;
+            aspect-ratio: 5/2;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .score-block {
+            font-family: 'digital7-mono';
+            background: #000;
+            border-style: solid;
+            border-width: 0.6vw;
+            border-color: #111 #222 #777 #555;
+            font-size: 38vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45%;
+            z-index: 20;
+            position: relative;
+        }
+
+        .center {
+            width: 10%;
+            padding: 0 1vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .centerBtn {
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5vw;
+            font-size: 2vw;
+            background: #444;
+            border: 0;
+            border-radius: 1vw;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+        }
+
+        /* 按鈕點擊效果 */
+        .clicked-effect:active {
+            transform: scale(0.95);
+            filter: brightness(1.2);
+        }
+
+        .score {
+            width: 2ch;
+            text-align: end;
+        }
+
+        .left-score {
+            color: rgb(228, 255, 228);
+            filter: drop-shadow(0 0 2vw lime);
+        }
+
+        .right-score {
+            color: rgb(255, 252, 236);
+            filter: drop-shadow(0 0 2vw gold);
+        }
+
+        .score-shadow {
+            content: '00';
+            color: #4444442c;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: drop-shadow(0 0 2vw #000);
+        }
+
+        .warning {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 20, 0.8);
+            color: #fff;
+            padding: 1vw;
+            border-radius: 1vw;
+            height: 60%;
+            width: 55%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2vw;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .confirm-Btns {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 90%;
+            height: 30%;
+            gap: 3vw;
+        }
+
+        .warning-title {
+            font-size: 6vw;
+        }
+
+        .confirmBtn {
+            background: #273172a4;
+            color: #fff;
+            border: 0;
+            border-radius: 1vw;
+            font-size: 2vw;
+            cursor: pointer;
+            flex-grow: 1;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+
+        <!-- 記分板區域 -->
+        <div class="board">
+
+            <!-- 左側分數 -->
+            <div class="left score-block">
+                <p class="score left-score">0</p>
+                <div class="score-shadow">00</div>
+            </div>
+
+            <!-- 中間區域 -->
+            <div class="center">
+                <button class="centerBtn clicked-effect score-minus-left">
+                    <i class="fa-solid fa-caret-left"></i>-1<i class="fa-solid fa-caret-left"
+                        style="color: transparent;"></i>
+                </button>
+                <button class="centerBtn clicked-effect score-clear" style="font-size: 1.5vw;">
+                    CLEAR
+                </button>
+                <button class="centerBtn clicked-effect score-minus-right">
+                    <i class="fa-solid fa-caret-right" style="color: transparent;"></i>-1<i
+                        class="fa-solid fa-caret-right"></i>
+                </button>
+            </div>
+
+            <!-- 右側分數 -->
+            <div class="right score-block">
+                <p class="score right-score">0</p>
+                <div class="score-shadow">00</div>
+            </div>
+
+            <!-- 清空分數警告 -->
+            <div class="warning">
+                <h1 class="warning-title">清空分數？</h1>
+                <div class="confirm-Btns">
+                    <button class="confirmBtn clicked-effect confirm-yes">清空</button>
+                    <button class="confirmBtn clicked-effect confirm-no">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 選取元素
+            const leftScore = document.querySelector('.left-score');
+            const rightScore = document.querySelector('.right-score');
+            const clearButton = document.querySelector('.score-clear');
+            const warningModal = document.querySelector('.warning');
+            const confirmClear = document.querySelector('.confirm-yes');
+            const cancelClear = document.querySelector('.confirm-no');
+            const decrementLeft = document.querySelector('.score-minus-left');
+            const decrementRight = document.querySelector('.score-minus-right');
+
+            // 初始分數
+            let leftScoreValue = 0;
+            let rightScoreValue = 0;
+
+            // 更新分數顯示
+            function updateScores() {
+                leftScore.textContent = leftScoreValue;
+                rightScore.textContent = rightScoreValue;
+            }
+
+            // 初始化分數
+            updateScores();
+
+            // 左側分數加1
+            document.querySelector('.left').addEventListener('click', () => {
+                leftScoreValue++;
+                updateScores();
+            });
+
+            // 右側分數加1
+            document.querySelector('.right').addEventListener('click', () => {
+                rightScoreValue++;
+                updateScores();
+            });
+
+            // 左側分數減1
+            decrementLeft.addEventListener('click', () => {
+                if (leftScoreValue > 0) {
+                    leftScoreValue--;
+                    updateScores();
+                }
+            });
+
+            // 右側分數減1
+            decrementRight.addEventListener('click', () => {
+                if (rightScoreValue > 0) {
+                    rightScoreValue--;
+                    updateScores();
+                }
+            });
+
+            // 顯示警告視窗
+            clearButton.addEventListener('click', () => {
+                warningModal.style.display = 'flex';
+            });
+
+            // 確認清空分數
+            confirmClear.addEventListener('click', () => {
+                leftScoreValue = 0;
+                rightScoreValue = 0;
+                updateScores();
+                warningModal.style.display = 'none';
+            });
+
+            // 取消清空分數
+            cancelClear.addEventListener('click', () => {
+                warningModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>
